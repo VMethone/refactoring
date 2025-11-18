@@ -24,18 +24,20 @@ public abstract class AbstractPerformanceCalculator {
     /**
      * Calculate the amount for this performance.
      * Subclasses may override to provide type-specific calculation.
-     * @return amount in cents
+    * @return amount in cents
+    * @throws RuntimeException if the play type is unknown
      */
     public int amountFor() {
         int result = 0;
         final String type = play.getType();
-        if ("tragedy".equals(type)) {
+        if (Constants.TYPE_TRAGEDY.equals(type)) {
             result = Constants.TRAGEDY_BASE_AMOUNT;
             if (performance.getAudience() > Constants.TRAGEDY_AUDIENCE_THRESHOLD) {
                 result += Constants.TRAGEDY_OVER_BASE_CAPACITY_PER_PERSON
                         * (performance.getAudience() - Constants.TRAGEDY_AUDIENCE_THRESHOLD);
             }
-        } else if ("comedy".equals(type)) {
+        }
+        else if (Constants.TYPE_COMEDY.equals(type)) {
             result = Constants.COMEDY_BASE_AMOUNT;
             if (performance.getAudience() > Constants.COMEDY_AUDIENCE_THRESHOLD) {
                 result += Constants.COMEDY_OVER_BASE_CAPACITY_AMOUNT
@@ -43,19 +45,22 @@ public abstract class AbstractPerformanceCalculator {
                         * (performance.getAudience() - Constants.COMEDY_AUDIENCE_THRESHOLD));
             }
             result += Constants.COMEDY_AMOUNT_PER_AUDIENCE * performance.getAudience();
-        } else if ("history".equals(type)) {
+        }
+        else if (Constants.TYPE_HISTORY.equals(type)) {
             result = Constants.HISTORY_BASE_AMOUNT;
             if (performance.getAudience() > Constants.HISTORY_AUDIENCE_THRESHOLD) {
                 result += Constants.HISTORY_OVER_BASE_CAPACITY_PER_PERSON
                         * (performance.getAudience() - Constants.HISTORY_AUDIENCE_THRESHOLD);
             }
-        } else if ("pastoral".equals(type)) {
+        }
+        else if (Constants.TYPE_PASTORAL.equals(type)) {
             result = Constants.PASTORAL_BASE_AMOUNT;
             if (performance.getAudience() > Constants.PASTORAL_AUDIENCE_THRESHOLD) {
                 result += Constants.PASTORAL_OVER_BASE_CAPACITY_PER_PERSON
                         * (performance.getAudience() - Constants.PASTORAL_AUDIENCE_THRESHOLD);
             }
-        } else {
+        }
+        else {
             throw new RuntimeException(String.format("unknown type: %s", play.getType()));
         }
         return result;

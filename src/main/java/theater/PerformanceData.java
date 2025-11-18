@@ -36,6 +36,11 @@ public class PerformanceData {
     }
 
     /**
+     * Alias for getAmount kept for compatibility with the textbook refactor.
+     * @return amount in cents
+     */
+
+    /**
      * Returns the amount (in cents) for this performance.
      * @return amount in cents
      */

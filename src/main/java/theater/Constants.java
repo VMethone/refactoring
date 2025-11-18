@@ -20,6 +20,11 @@ public final class Constants {
     public static final int TRAGEDY_OVER_BASE_CAPACITY_PER_PERSON = 1000;
     // formatting constants
     public static final int PERCENT_FACTOR = 100;
+    // play type constants
+    public static final String TYPE_TRAGEDY = "tragedy";
+    public static final String TYPE_COMEDY = "comedy";
+    public static final String TYPE_HISTORY = "history";
+    public static final String TYPE_PASTORAL = "pastoral";
     // history constants
     public static final int HISTORY_BASE_AMOUNT = 20000;
     public static final int HISTORY_OVER_BASE_CAPACITY_PER_PERSON = 1000;
