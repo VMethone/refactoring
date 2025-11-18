@@ -30,7 +30,12 @@ public class PerformanceData {
     public int getAudience() {
         return audience;
     }
-
+    /**
+    * Returns the amount (in cents) for this performance.
+    * This is kept for backwards compatibility with the refactoring example in the textbook.
+    *
+     * @return amount in cents
+    */
     public int amountFor() {
         return amount;
     }
