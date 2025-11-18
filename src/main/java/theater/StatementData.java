@@ -15,10 +15,10 @@ public class StatementData {
     public StatementData(Invoice invoice, Map<String, Play> plays) {
         this.customer = invoice.getCustomer();
         for (Performance p : invoice.getPerformances()) {
-            Play play = plays.get(p.getPlayID());
-            AbstractPerformanceCalculator calculator = AbstractPerformanceCalculator.createPerformanceCalculator(p, play);
-            int amount = calculator.amountFor();
-            int volumeCredits = calculator.volumeCredits();
+            final Play play = plays.get(p.getPlayID());
+            final AbstractPerformanceCalculator calculator = AbstractPerformanceCalculator.createPerformanceCalculator(p, play);
+            final int amount = calculator.amountFor();
+            final int volumeCredits = calculator.volumeCredits();
             performances.add(new PerformanceData(play.getName(), play.getType(), p.getAudience(), amount, volumeCredits));
         }
     }
@@ -33,7 +33,7 @@ public class StatementData {
 
     public int totalAmount() {
         int result = 0;
-        for (PerformanceData pd : performances) {
+        for (final PerformanceData pd : performances) {
             result += pd.getAmount();
         }
         return result;
@@ -41,7 +41,7 @@ public class StatementData {
 
     public int volumeCredits() {
         int result = 0;
-        for (PerformanceData pd : performances) {
+        for (final PerformanceData pd : performances) {
             result += pd.getVolumeCredits();
         }
         return result;

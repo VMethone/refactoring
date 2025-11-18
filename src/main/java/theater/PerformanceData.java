@@ -35,10 +35,18 @@ public class PerformanceData {
         return amount;
     }
 
+    /**
+     * Returns the amount (in cents) for this performance.
+     * @return amount in cents
+     */
     public int getAmount() {
         return amount;
     }
 
+    /**
+     * Returns the computed volume credits for this performance.
+     * @return volume credits
+     */
     public int getVolumeCredits() {
         return volumeCredits;
     }

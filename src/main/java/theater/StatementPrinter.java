@@ -8,12 +8,20 @@ import java.util.Map;
  * This class generates a statement for a given invoice of performances.
  */
 public class StatementPrinter {
-    protected final Invoice invoice;
-    protected final Map<String, Play> plays;
+    private final Invoice invoice;
+    private final Map<String, Play> plays;
 
     public StatementPrinter(Invoice invoice, Map<String, Play> plays) {
         this.invoice = invoice;
         this.plays = plays;
+    }
+
+    protected Invoice getInvoice() {
+        return invoice;
+    }
+
+    protected Map<String, Play> getPlays() {
+        return plays;
     }
 
     /**
@@ -22,13 +30,13 @@ public class StatementPrinter {
      * @throws RuntimeException if one of the play types is not known
      */
     public String statement() {
-        StatementData statementData = new StatementData(invoice, plays);
+        final StatementData statementData = new StatementData(getInvoice(), getPlays());
         return renderPlainText(statementData);
     }
 
     private String renderPlainText(StatementData statementData) {
-        StringBuilder result = new StringBuilder("Statement for " + statementData.getCustomer() + System.lineSeparator());
-        for (PerformanceData pd : statementData.getPerformances()) {
+        final StringBuilder result = new StringBuilder("Statement for " + statementData.getCustomer() + System.lineSeparator());
+        for (final PerformanceData pd : statementData.getPerformances()) {
             result.append(String.format("  %s: %s (%s seats)%n", pd.getName(), usd(pd.amountFor()), pd.getAudience()));
         }
         result.append(String.format("Amount owed is %s%n", usd(statementData.totalAmount())));
