@@ -22,18 +22,17 @@ public class StatementPrinter {
      * @throws RuntimeException if one of the play types is not known
      */
     public String statement() {
-        // totals will be calculated with helper methods
-        StringBuilder result = new StringBuilder("Statement for " + invoice.getCustomer() + System.lineSeparator());
-        // NumberFormat is used by usd() helper
+        StatementData statementData = new StatementData(invoice, plays);
+        return renderPlainText(statementData);
+    }
 
-        for (Performance p : invoice.getPerformances()) {
-            // print line for this order
-            Play play = getPlay(p);
-            result.append(String.format("  %s: %s (%s seats)%n",
-                    play.getName(), usd(getAmount(p)), p.getAudience()));
+    private String renderPlainText(StatementData statementData) {
+        StringBuilder result = new StringBuilder("Statement for " + statementData.getCustomer() + System.lineSeparator());
+        for (PerformanceData pd : statementData.getPerformances()) {
+            result.append(String.format("  %s: %s (%s seats)%n", pd.getName(), usd(pd.amountFor()), pd.getAudience()));
         }
-        result.append(String.format("Amount owed is %s%n", usd(getTotalAmount())));
-        result.append(String.format("You earned %s credits%n", getTotalVolumeCredits()));
+        result.append(String.format("Amount owed is %s%n", usd(statementData.totalAmount())));
+        result.append(String.format("You earned %s credits%n", statementData.volumeCredits()));
         return result.toString();
     }
 

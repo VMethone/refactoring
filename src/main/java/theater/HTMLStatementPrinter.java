@@ -14,20 +14,20 @@ public class HTMLStatementPrinter extends StatementPrinter {
 
     @Override
     public String statement() {
+        StatementData statementData = new StatementData(invoice, plays);
         final StringBuilder result = new StringBuilder(String.format("<h1>Statement for %s</h1>%n",
-                invoice.getCustomer()));
+            statementData.getCustomer()));
         result.append("<table>").append(System.lineSeparator());
-        result.append(String.format(" <caption>Statement for %s</caption>%n", invoice.getCustomer()));
+        result.append(String.format(" <caption>Statement for %s</caption>%n", statementData.getCustomer()));
         result.append(" <tr><th>play</th><th>seats</th><th>cost</th></tr>").append(System.lineSeparator());
-        for (Performance p : invoice.getPerformances()) {
-            Play play = getPlay(p);
+        for (PerformanceData pd : statementData.getPerformances()) {
             result.append(String.format(" <tr><td>%s</td><td>%s</td><td>%s</td></tr>%n",
-                    play.getName(), p.getAudience(), usd(getAmount(p))));
+                pd.getName(), pd.getAudience(), usd(pd.amountFor())));
         }
         result.append("</table>").append(System.lineSeparator());
 
-        result.append(String.format("<p>Amount owed is <em>%s</em></p>%n", usd(getTotalAmount())));
-        result.append(String.format("<p>You earned <em>%s</em> credits</p>%n", getTotalVolumeCredits()));
+        result.append(String.format("<p>Amount owed is <em>%s</em></p>%n", usd(statementData.totalAmount())));
+        result.append(String.format("<p>You earned <em>%s</em> credits</p>%n", statementData.volumeCredits()));
         return result.toString();
     }
 }
