@@ -84,8 +84,9 @@ public abstract class AbstractPerformanceCalculator {
      * @param play play
      * @return a calculator instance
      */
-    public static AbstractPerformanceCalculator 
-    createPerformanceCalculator(final Performance performance, final Play play) {
+    public static AbstractPerformanceCalculator createPerformanceCalculator(
+            final Performance performance, 
+            final Play play) {
         final String type = play.getType();
         if ("tragedy".equals(type)) {
             return new TragedyCalculator(performance, play);
